@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: selenium-node-chrome
+spec:
+  serviceName: selenium-nodes
+  replicas: 3  # scale as needed
+  selector:
+    matchLabels:
+      app: selenium-node
+  template:
+    metadata:
+      labels:
+        app: selenium-node
+    spec:
+      containers:
+      - name: node-chrome
+        image: selenium/node-chrome:4.25.0
+        env:
+        - name: SE_EVENT_BUS_HOST
+          value: "selenium-hub-0.selenium-hub.default.svc.cluster.local"  # stable Hub DNS
+        - name: SE_EVENT_BUS_PUBLISH_PORT
+          value: "4442"
+        - name: SE_EVENT_BUS_SUBSCRIBE_PORT
+          value: "4443"
+        - name: SE_NODE_GRID_URL
+          value: "http://selenium-hub-0.selenium-hub.default.svc.cluster.local:4444"
+        ports:
+        - containerPort: 5555

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: selenium-hub
+spec:
+  serviceName: selenium-hub
+  replicas: 1
+  selector:
+    matchLabels:
+      app: selenium-hub
+  template:
+    metadata:
+      labels:
+        app: selenium-hub
+    spec:
+      containers:
+      - name: hub
+        image: selenium/hub:4.25.0
+        ports:
+        - containerPort: 4444
+

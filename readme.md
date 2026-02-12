@@ -1,25 +1,4 @@
 
-#Architecture
-
-
-┌─────────────────┐    ┌──────────────────┐    ┌──────────────────┐
-│   Test Client   │───▶│   selenium-hub-0 │◄──▶│selenium-node-chrome-X│
-│ (App Teams)     │    │ (StatefulSet 1)  │    │   (StatefulSet N)  │
-└─────────────────┘    └──────────┬───────┘    └──────────────────┘
-                                 │
-                    ┌────────────▼─────────────┐
-                    │ selenium-hub (headless)  │
-                    │  DNS: hub-0.hub.ns.svc   │
-                    └──────────┬───────────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │selenium-nodes       │
-                    │(headless service)   │
-                    └─────────────────────┘
-
-
-
-
 Headless Service (clusterIP: None): No load balancing, returns direct Pod IPs/DNS
 
 StatefulSet: Guarantees stable Pod identity (selenium-hub-0, selenium-node-chrome-1)
